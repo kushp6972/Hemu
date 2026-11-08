@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>शुभ दिवाली</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Noto Sans Devanagari', sans-serif; background:#1a0a00; color:#ffe9b0; overflow:hidden; }
+  .page { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px; background:radial-gradient(circle at 50% 30%, #5a2a00, #1a0a00); animation:fade 0.8s; }
+  .page.active { display:flex; }
+  @keyframes fade { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;} }
+  h1 { font-size:2.2rem; color:#ffc94d; margin-bottom:16px; text-shadow:0 0 20px #ff9800; }
+  p { font-size:1.3rem; line-height:1.8; max-width:480px; }
+  video { width:100%; max-width:420px; border-radius:16px; box-shadow:0 0 30px #ff9800; }
+  .hint { margin-top:20px; font-size:1rem; opacity:0.7; animation:blink 1.5s infinite; }
+  @keyframes blink { 50%{opacity:0.2;} }
+  .gallery { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:420px; }
+  .gallery img { width:100%; border-radius:12px; aspect-ratio:1; object-fit:cover; }
+  .diya { font-size:4rem; animation:glow 2s infinite alternate; }
+  @keyframes glow { from{filter:drop-shadow(0 0 5px #ff9800);} to{filter:drop-shadow(0 0 25px #ffeb3b);} }
+  .heart { position:absolute; bottom:-40px; font-size:2rem; animation:rise 5s linear infinite; }
+  @keyframes rise { to { transform:translateY(-110vh); opacity:0; } }
+</style>
+</head>
+<body>
+
+<div class="page active">
+  <video id="v" src="intro.mp4" playsinline loop muted></video>
+  <p class="hint">शुरू करने के लिए टैप करो ✨</p>
+</div>
+
+<div class="page">
+  <div class="diya">🪔</div>
+  <h1>शुभ दीपावली, [उसका नाम]!</h1>
+  <p>इस दिवाली तुम्हारे लिए मैंने कुछ ख़ास बनाया है।</p>
+  <p class="hint">आगे बढ़ने के लिए टैप करो</p>
+</div>
+
+<div class="page">
+  <h1>हमारी पहली मुलाक़ात</h1>
+  <p>[यहाँ अपनी पहली मुलाक़ात की याद दो-तीन लाइनों में लिखो।]</p>
+  <p class="hint">टैप करो</p>
+</div>
+
+<div class="page">
+  <h1>हमारी यादें</h1>
+  <div class="gallery">
+    <img src="photo1.jpg" alt="">
+    <img src="photo2.jpg" alt="">
+    <img src="photo3.jpg" alt="">
+    <img src="photo4.jpg" alt="">
+  </div>
+  <p class="hint">टैप करो</p>
+</div>
+
+<div class="page">
+  <h1>तुमसे मेरी तीन बातें</h1>
+  <p>१. [पहली बात]<br>२. [दूसरी बात]<br>३. [तीसरी बात]</p>
+  <p class="hint">टैप करो</p>
+</div>
+
+<div class="page" id="last">
+  <div class="diya">🪔</div>
+  <h1>तुम मेरी रोशनी हो ❤️</h1>
+  <p>हर दिवाली तुम्हारे साथ मनाना चाहता हूँ।<br>Happy Diwali!</p>
+</div>
+
+<script>
+  const pages = document.querySelectorAll('.page');
+  const video = document.getElementById('v');
+  let i = 0;
+  document.body.addEventListener('click', () => {
+    if (i === 0) { video.muted = false; }
+    if (i < pages.length - 1) {
+      pages[i].classList.remove('active');
+      i++;
+      pages[i].classList.add('active');
+      if (i === pages.length - 1) startHearts();
+    }
+  });
+  function startHearts() {
+    setInterval(() => {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.textContent = ['❤️','🪔','✨'][Math.floor(Math.random()*3)];
+      h.style.left = Math.random()*100 + 'vw';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }, 300);
+  }
+  video.play();
+</script>
+</body>
+</html>
